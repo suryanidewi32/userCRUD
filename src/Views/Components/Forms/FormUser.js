@@ -14,9 +14,9 @@ const FormUser = () => {
     password: "",
     role: ""
   };
+  console.log(initialUserState)
 
   const [user, setUser] = useState(initialUserState);
-  const [submitted, setSubmitted] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const FormUser = () => {
   const saveTutorial = () => {
     const { name, username, email, password, role } = user;
 
-    dispatch(createUser(name, username, email, password, role))
+    dispatch(createUser({name, username, email, password, role}))
       .then(data => {
         setUser({
           id: data.id,
@@ -37,10 +37,8 @@ const FormUser = () => {
           role: data.role
         });
         reload()
-        console.log('f',data);
       })
       .catch(e => {
-        console.log(e);
       });
   };
 
@@ -67,19 +65,15 @@ const FormUser = () => {
 
   function handleChange(value) { 
     setUser({...user, role: value});
-    // console.log({...user, role: value})
   }
 
   const handleInputChange = event => {
     const { name, value } = event.target;
-    // console.log( { name, value } )
     setUser({ ...user, [name]: value });
   };
 
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-  };
 
   return (
     <>
